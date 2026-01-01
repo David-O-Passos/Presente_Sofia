@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Sofia ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff4757; /* Cor mais vibrante para destaque */
-            --text: #2f3542;    /* Cor escura para o texto dos prêmios */
+            --primary: #ff4757;
+            --text: #2f3542;
         }
 
         body {
@@ -26,26 +26,30 @@
         h1 {
             color: #ff4757;
             font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
+            font-size: 3.5rem; /* Título maior */
             margin-bottom: 25px;
             text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
             text-align: center;
+            z-index: 10;
         }
 
         .container {
             position: relative;
-            width: 350px;
-            height: 350px;
+            /* AUMENTO DO TAMANHO AQUI */
+            width: 500px;
+            height: 500px;
             display: flex;
             justify-content: center;
             align-items: center;
+            /* Garante que não estoure a tela no celular */
+            max-width: 95vw;
+            max-height: 95vw;
         }
 
-        /* O botão do meio */
         .spinBtn {
             position: absolute;
-            width: 70px;
-            height: 70px;
+            width: 80px; /* Botão um pouco maior */
+            height: 80px;
             background: #fff;
             border-radius: 50%;
             z-index: 10;
@@ -61,12 +65,11 @@
             user-select: none;
             box-shadow: 0 5px 20px rgba(0,0,0,0.15);
             transition: transform 0.2s;
-            font-size: 14px;
+            font-size: 16px;
         }
 
         .spinBtn:active { transform: scale(0.95); }
 
-        /* Seta indicadora */
         .spinBtn::before {
             content: '';
             position: absolute;
@@ -86,7 +89,7 @@
             background: #333;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 0 0 10px rgba(255,255,255,0.7), 0 15px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 0 0 12px rgba(255,255,255,0.7), 0 15px 30px rgba(0,0,0,0.2);
             transition: transform 5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
@@ -104,18 +107,36 @@
             user-select: none;
         }
 
-        /* -- CORREÇÃO DO TEXTO AQUI -- */
+        /* -- CONFIGURAÇÃO DO TEXTO -- */
         .number span {
             position: relative;
             transform: rotate(45deg);
-            font-size: 12px;         /* Fonte um pouco menor para caber */
-            font-weight: 800;
-            color: var(--text);      /* Cor escura para leitura */
+            
+            /* FONTE MAIOR AQUI */
+            font-size: 22px; 
+            font-weight: 900;
+            color: var(--text);
             text-align: center;
-            left: -18px;             /* Ajuste de posição horizontal */
-            top: -55px;              /* Ajuste de posição vertical */
-            width: 90px;
+            
+            /* Ajuste de posição para a roda maior */
+            left: -20px;
+            top: -85px; /* Empurrei mais para a borda */
+            width: 140px; /* Largura maior para o texto caber */
             line-height: 1.1;
+        }
+
+        /* -- AJUSTE PARA CELULAR (Telas pequenas) -- */
+        @media (max-width: 600px) {
+            .container {
+                width: 350px;
+                height: 350px;
+            }
+            .number span {
+                font-size: 14px; /* Diminui a fonte no celular */
+                top: -55px;      /* Traz o texto mais pro centro no celular */
+                width: 100px;
+            }
+            h1 { font-size: 2.5rem; }
         }
 
         /* Modal do Resultado */
@@ -144,13 +165,13 @@
             transform: scale(0.8);
             transition: transform 0.3s;
             max-width: 80%;
-            width: 300px;
+            width: 320px;
         }
 
         #resultado.ativo .card { transform: scale(1); }
 
-        .card h2 { color: var(--primary); margin-top: 0; font-family: 'Dancing Script', cursive; font-size: 2.5rem; }
-        .card p { font-size: 1.4rem; color: #333; font-weight: bold; margin: 20px 0; }
+        .card h2 { color: var(--primary); margin-top: 0; font-family: 'Dancing Script', cursive; font-size: 2.8rem; }
+        .card p { font-size: 1.6rem; color: #333; font-weight: bold; margin: 20px 0; }
         
         .card button {
             background: var(--primary);
@@ -158,13 +179,12 @@
             border: none;
             padding: 12px 30px;
             border-radius: 50px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
             font-weight: bold;
         }
 
-        /* Confete */
         .confetti {
             position: absolute;
             width: 10px;
@@ -208,21 +228,22 @@
         let girando = false;
 
         const premios = [
-            "Cafuné Ilimitado",         // 8
-            "Vale Beijo",               // 7
-            "Chocolate",                // 6
-            "Vale um Curinga",          // 5
-            "Massagem",                 // 4
-            "Sessão Filme",             // 3
-            "10 Abraços Apertados",     // 2
-            "Passeio Surpresa"          // 1
+            "Cafuné",         
+            "Vale Beijo",     
+            "Chocolate",      
+            "Jantar Pago",    
+            "Massagem",       
+            "Sessão Filme",   
+            "Eu lavo louça",  
+            "Café na Cama"    
         ];
 
         function girar() {
             if (girando) return;
             girando = true;
 
-            let rotacaoExtra = Math.ceil(Math.random() * 3600) + 3600; 
+            // Rotação aleatória (Mínimo 8 voltas completas)
+            let rotacaoExtra = Math.ceil(Math.random() * 3600) + 2880; 
             valor += rotacaoExtra;
             
             wheel.style.transform = "rotate(" + valor + "deg)";
@@ -250,7 +271,7 @@
 
         function soltarConfetes() {
             const colors = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502'];
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 60; i++) {
                 const confetti = document.createElement('div');
                 confetti.classList.add('confetti');
                 confetti.style.left = Math.random() * 100 + 'vw';
