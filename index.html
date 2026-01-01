@@ -7,10 +7,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ff708d;
-            --secondary: #ffccd5;
-            --accent: #fff0f3;
-            --text: #594a4e;
+            --primary: #ff4757; /* Cor mais vibrante para destaque */
+            --text: #2f3542;    /* Cor escura para o texto dos prêmios */
         }
 
         body {
@@ -18,7 +16,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #fff5f7 0%, #ffd1ff 100%);
+            background: linear-gradient(135deg, #ffeaa7 0%, #ffadad 100%);
             margin: 0;
             overflow: hidden;
             font-family: 'Nunito', sans-serif;
@@ -26,11 +24,11 @@
         }
 
         h1 {
-            color: var(--primary);
+            color: #ff4757;
             font-family: 'Dancing Script', cursive;
             font-size: 3rem;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
             text-align: center;
         }
 
@@ -46,8 +44,8 @@
         /* O botão do meio */
         .spinBtn {
             position: absolute;
-            width: 75px;
-            height: 75px;
+            width: 70px;
+            height: 70px;
             background: #fff;
             border-radius: 50%;
             z-index: 10;
@@ -55,15 +53,15 @@
             justify-content: center;
             align-items: center;
             text-transform: uppercase;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--primary);
             letter-spacing: 0.1em;
-            border: 4px solid rgba(0,0,0,0.05);
+            border: 4px solid rgba(0,0,0,0.1);
             cursor: pointer;
             user-select: none;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
             transition: transform 0.2s;
-            animation: pulse 1.5s infinite;
+            font-size: 14px;
         }
 
         .spinBtn:active { transform: scale(0.95); }
@@ -72,17 +70,11 @@
         .spinBtn::before {
             content: '';
             position: absolute;
-            top: -25px;
-            width: 30px;
-            height: 40px;
+            top: -22px;
+            width: 25px;
+            height: 35px;
             background: #fff;
             clip-path: polygon(50% 0%, 15% 100%, 85% 100%);
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 112, 141, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 112, 141, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 112, 141, 0); }
         }
 
         .wheel {
@@ -94,8 +86,8 @@
             background: #333;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 0 0 10px rgba(255,255,255,0.6), 0 15px 30px rgba(0,0,0,0.1);
-            transition: transform 5s cubic-bezier(0.19, 1, 0.22, 1); /* Girar suave */
+            box-shadow: 0 0 0 10px rgba(255,255,255,0.7), 0 15px 30px rgba(0,0,0,0.2);
+            transition: transform 5s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         .number {
@@ -112,24 +104,25 @@
             user-select: none;
         }
 
+        /* -- CORREÇÃO DO TEXTO AQUI -- */
         .number span {
             position: relative;
             transform: rotate(45deg);
-            font-size: 13px; /* Fonte ajustada */
+            font-size: 12px;         /* Fonte um pouco menor para caber */
             font-weight: 800;
-            color: #fff;
+            color: var(--text);      /* Cor escura para leitura */
             text-align: center;
-            left: -25px;
-            top: -45px;
-            width: 100px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            left: -18px;             /* Ajuste de posição horizontal */
+            top: -55px;              /* Ajuste de posição vertical */
+            width: 90px;
+            line-height: 1.1;
         }
 
         /* Modal do Resultado */
         #resultado {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -137,26 +130,27 @@
             pointer-events: none;
             transition: opacity 0.3s;
             z-index: 100;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(5px);
         }
 
         #resultado.ativo { opacity: 1; pointer-events: all; }
 
         .card {
             background: white;
-            padding: 40px;
-            border-radius: 25px;
+            padding: 30px;
+            border-radius: 20px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             transform: scale(0.8);
             transition: transform 0.3s;
             max-width: 80%;
+            width: 300px;
         }
 
         #resultado.ativo .card { transform: scale(1); }
 
         .card h2 { color: var(--primary); margin-top: 0; font-family: 'Dancing Script', cursive; font-size: 2.5rem; }
-        .card p { font-size: 1.5rem; color: var(--text); font-weight: bold; margin: 20px 0; }
+        .card p { font-size: 1.4rem; color: #333; font-weight: bold; margin: 20px 0; }
         
         .card button {
             background: var(--primary);
@@ -166,18 +160,18 @@
             border-radius: 50px;
             font-size: 1.1rem;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 112, 141, 0.4);
-            transition: transform 0.2s;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            font-weight: bold;
         }
-        .card button:hover { transform: scale(1.05); }
 
-        /* Confete simples */
+        /* Confete */
         .confetti {
             position: absolute;
             width: 10px;
             height: 10px;
             background-color: #f00;
             animation: fall linear forwards;
+            z-index: 50;
         }
         @keyframes fall { to { transform: translateY(100vh) rotate(720deg); } }
     </style>
@@ -213,7 +207,6 @@
         let valor = 0;
         let girando = false;
 
-        // ORDEM INVERSA AO RELÓGIO (O ponteiro fica fixo, a roda gira)
         const premios = [
             "Cafuné",         // 8
             "Vale Beijo",     // 7
@@ -226,17 +219,16 @@
         ];
 
         function girar() {
-            if (girando) return; // Evita clique duplo
+            if (girando) return;
             girando = true;
 
-            let rotacaoExtra = Math.ceil(Math.random() * 3600) + 3600; // Mínimo 10 voltas
+            let rotacaoExtra = Math.ceil(Math.random() * 3600) + 3600; 
             valor += rotacaoExtra;
             
             wheel.style.transform = "rotate(" + valor + "deg)";
 
             setTimeout(() => {
                 const grausFinais = valor % 360;
-                // Ajuste matemático para pegar o item certo no topo
                 const index = Math.floor(((360 - grausFinais + 22.5) % 360) / 45);
                 const premioGanhador = premios[index];
                 
@@ -253,16 +245,16 @@
 
         function fechar() {
             document.getElementById('resultado').classList.remove('ativo');
-            // Remove confetes antigos
             document.querySelectorAll('.confetti').forEach(c => c.remove());
         }
 
         function soltarConfetes() {
-            const colors = ['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#bdb2ff', '#ffc6ff'];
+            const colors = ['#ff4757', '#2ed573', '#1e90ff', '#ffa502'];
             for (let i = 0; i < 50; i++) {
                 const confetti = document.createElement('div');
                 confetti.classList.add('confetti');
                 confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = -10 + 'px';
                 confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 document.body.appendChild(confetti);
